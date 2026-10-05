@@ -16,7 +16,7 @@ together.
 
 ## Works with GitHub Copilot, Codex and Claude Code
 
-**Step-by-step guides:** [GitHub Copilot](docs/guide-copilot.md) · [Codex](docs/guide-codex.md) · [Claude Code](docs/guide-claude-code.md)
+**Step-by-step guides:** [GitHub Copilot](docs/guide-copilot.md) · [Codex](docs/guide-codex.md) · [Claude Code](docs/guide-claude-code.md) · [Linking multiple wikis](docs/guide-linked-wikis.md)
 
 The schema and procedures are **tool-neutral** and written once; each agent picks them
 up from the place it natively reads:
@@ -71,7 +71,7 @@ templates/           Page templates (source, entity, concept, topic, analysis)
 tools/wiki.py        Helper CLI: search, lint, stats, pending, xlinks, log (stdlib only)
 tools/sync_agents.py Regenerates tool-specific agent files from .agents/
 scripts/new-wiki.py  Bootstrap a new wiki from this template (cross-platform)
-docs/                Usage guides for Copilot, Codex and Claude Code
+docs/                Usage guides (Copilot, Codex, Claude Code, linked wikis)
 ```
 
 ## Quick start
@@ -123,6 +123,8 @@ linked_wikis:
   `wiki/_meta/external-links.md`.
 - `python3 tools/wiki.py xlinks` verifies every cross-wiki reference.
 - `/query --federated` reads each linked wiki's index and overview, then drills in.
+
+Step by step: [docs/guide-linked-wikis.md](docs/guide-linked-wikis.md).
 
 ## Helper CLI
 
