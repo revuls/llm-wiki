@@ -1,0 +1,17 @@
+{
+  // Copilot: use the canonical, tool-neutral files and skip the generated Claude copies
+  // (avoids duplicate skills and agents in the chat pickers).
+  "chat.useAgentsMdFile": true,
+  "chat.useClaudeMdFile": false,
+  "chat.agentSkillsLocations": {
+    ".agents/skills": true,
+    ".claude/skills": false
+  },
+  "chat.agentFilesLocations": {
+    ".github/agents": true,
+    ".claude/agents": false
+  },
+  "files.exclude": {
+    "**/__pycache__": true
+  }
+}
