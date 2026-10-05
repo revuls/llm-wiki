@@ -1,0 +1,17 @@
+# OS / editors
+.DS_Store
+Thumbs.db
+*.swp
+
+# Obsidian per-user state (keep shared config)
+.obsidian/workspace*.json
+.obsidian/cache
+.obsidian/plugins/*/data.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Claude Code local settings
+.claude/settings.local.json

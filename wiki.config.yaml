@@ -1,0 +1,47 @@
+# Wiki configuration — the domain-specific part of the schema.
+# Run /setup-wiki to fill this in interactively for a new wiki.
+
+id: my-wiki                 # unique, kebab-case; used for cross-wiki links ([[my-wiki:slug]])
+name: My Wiki
+description: >
+  One or two sentences describing what this knowledge base is about.
+owner: your-team-or-name
+audience: Who reads this wiki and what they need from it.
+language: en
+
+# What belongs in this wiki (helps the LLM decide what to extract and what to skip).
+scope:
+  in:
+    - "e.g. decisions, architecture and operations of System X"
+  out:
+    - "e.g. personal data, HR topics"
+
+# Page categories in wiki/. Add domain folders if useful (e.g. "decisions", "meetings"),
+# and create the folder + a template in templates/ for each new one.
+categories:
+  - sources
+  - entities
+  - concepts
+  - topics
+  - analyses
+
+# Ingest behaviour
+ingest:
+  mode: interactive         # interactive | batch
+  max_pages_touched: 15     # soft limit per source; ask before exceeding
+
+# Lint
+lint:
+  stale_after_days: 180     # pages not updated for this long are flagged
+
+# Git
+auto_commit: false          # if true, commit after each ingest/lint/link operation
+
+# Other wikis this one can read from and link to (read-only).
+# path is relative to this repo's root; repo is optional (for cloning/reference).
+linked_wikis: []
+#  - id: security
+#    name: Security Wiki
+#    path: ../security-wiki
+#    repo: git@github.com:your-org/security-wiki.git
+#    scope: Security policies, threat models, controls
