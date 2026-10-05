@@ -13,6 +13,11 @@ jobs:
         with:
           python-version: "3.12"
       - name: Generated agent files are up to date
-        run: python tools/sync_agents.py --check
+        run: python tools/wiki.py sync --check
+      - name: Index is up to date
+        run: python tools/wiki.py index --check
       - name: Wiki lint (errors fail the build)
         run: python tools/wiki.py lint --quick
+      - name: Framework tests (template repo only)
+        if: hashFiles('tests/**') != ''
+        run: python -m unittest discover -s tests -v

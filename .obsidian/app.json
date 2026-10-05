@@ -6,7 +6,7 @@
   "userIgnoreFilters": [
     "templates/",
     "docs/",
-    "tools/",
-    "scripts/"
+    "tests/",
+    "tools/"
   ]
 }

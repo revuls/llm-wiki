@@ -1,0 +1,21 @@
+# Framework-managed paths. `wiki.py new` copies them into new wikis and
+# `wiki.py upgrade` refreshes them from the template repo. Directories end with "/".
+# Wiki-owned files (never touched by upgrade): wiki.config.yaml, README.md, raw/, wiki/.
+# Generated files (.claude/agents, .claude/skills, .github/agents/wiki-*, .codex/agents)
+# are rebuilt by `wiki.py sync` after copying.
+AGENTS.md
+CLAUDE.md
+.gitignore
+.githooks/
+.agents/skills/
+.agents/agents/
+.claude/settings.json
+.github/copilot-instructions.md
+.github/agents/wiki.agent.md
+.github/workflows/wiki-check.yml
+.vscode/settings.json
+.vscode/extensions.json
+.obsidian/app.json
+templates/
+tools/
+docs/

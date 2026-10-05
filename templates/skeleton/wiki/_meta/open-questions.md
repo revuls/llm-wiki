@@ -2,8 +2,8 @@
 title: Open questions
 type: meta
 summary: Contradictions, gaps, questions to investigate, sources to find, suggestions for other wikis.
-created: 2026-10-05
-updated: 2026-10-05
+created: {{DATE}}
+updated: {{DATE}}
 ---
 
 # Open questions

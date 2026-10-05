@@ -1,21 +1,23 @@
 ---
 title: "{{Source title}}"
 type: source
+summary: "One line for the index: what this page is about."
 tags: []
 created: {{YYYY-MM-DD}}
 updated: {{YYYY-MM-DD}}
-sources: []
 status: stable
-raw: "../../raw/processed/{{filename}}"
+raw: raw/{{filename}}            # path from the repo root (required)
 source_type: article | paper | report | transcript | meeting | slack-thread | doc | dataset | other
 author: ""
 published: {{YYYY-MM-DD or unknown}}
 url: ""
 ---
 
+<!-- Fill in what you know; OMIT sections that would be empty. -->
+
 # {{Source title}}
 
-**Raw file:** [{{filename}}](../../raw/processed/{{filename}}) · **Type:** … · **Author:** … · **Date:** …
+**Raw file:** [{{filename}}](../../raw/{{filename}}) · **Type:** … · **Author:** … · **Date:** …
 
 ## Summary
 3–6 sentences: what this source is and why it matters to this wiki.

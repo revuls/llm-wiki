@@ -1,13 +1,10 @@
 # Wiki configuration — everything specific to THIS wiki lives here.
-# This copy belongs to the TEMPLATE repo (template: true): it is skipped by sibling discovery,
-# and `wiki.py new` / `init` render a fresh one from templates/skeleton/wiki.config.yaml.
-template: true
 # Framework files (AGENTS.md, .agents/, tools/, templates/, docs/) are shared across
 # wikis and refreshed with `python3 tools/wiki.py upgrade` — don't put local rules there.
 
-id: my-wiki                     # unique, kebab-case; prefix for cross-wiki links ([[my-wiki:slug]])
-name: My Wiki
-description: "Template repository for LLM-maintained wikis. Run `python3 tools/wiki.py new` or `init` to create a real wiki."
+id: {{ID}}                     # unique, kebab-case; prefix for cross-wiki links ([[{{ID}}:slug]])
+name: {{NAME}}
+description: {{DESCRIPTION}}
 owner: ""
 audience: ""
 
@@ -15,9 +12,9 @@ audience: ""
 # cross-wiki questions). Quote items that contain a colon.
 scope:
   in:
-    - ""
+{{SCOPE_IN}}
   out:
-    - ""
+{{SCOPE_OUT}}
 
 # Domain-specific rules the agent must follow (terminology, units, naming, tone…).
 style_rules: []
@@ -47,5 +44,5 @@ linked_wikis: []               # wikis elsewhere: - {id: x, path: ../../other/x-
 
 # Where `wiki.py upgrade` gets framework updates from.
 framework:
-  repo: https://github.com/revuls/llm-wiki.git
+  repo: {{FRAMEWORK_REPO}}
   ref: main

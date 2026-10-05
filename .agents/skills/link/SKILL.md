@@ -1,36 +1,36 @@
 ---
 name: link
-description: Manage cross-wiki relationships — register another LLM wiki, discover connections between this wiki and linked wikis, add [[wiki-id:slug]] references, and verify existing ones. Use when the user wants to connect, link or relate this wiki with other wikis.
-argument-hint: "add <path|repo> | discover [wiki-id] | check"
+description: Connect this wiki with other LLM wikis — list linked wikis, discover shared entities/concepts/topics and contradictions, add [[wiki-id:slug]] references and verify them. Use when the user wants to link, relate or connect wikis.
+argument-hint: "[discover [wiki-id] | check | add <path>]"
 ---
 
-# Link (cross-wiki)
+# Link
 
-Follow `AGENTS.md` §6. Subcommand and arguments are the text after the command.
+Sibling folders with a `wiki.config.yaml` are linked **automatically** — no registration
+needed. `python3 tools/wiki.py wikis` lists them with id, path and scope.
 
-## add <path-or-repo>
-1. Locate the other wiki. If a git URL is given and no local copy exists, ask the
-   human where to clone it (suggest a sibling folder `../<name>`); clone only with OK.
-2. Read its `wiki.config.yaml` (id, name, description, scope) and `wiki/index.md`.
-   Refuse if its `id` equals this wiki's id or one already registered.
-3. Append to `linked_wikis` in `wiki.config.yaml`: `id`, `name`, `path`, `repo`, `scope`.
-4. Run `discover` for it. Suggest that the other wiki register this one too
-   (note it under "Suggestions for other wikis" in `_meta/external-links.md`).
+## (no argument)
+Show `python3 tools/wiki.py wikis` and `python3 tools/wiki.py xlinks`, and suggest `discover`.
 
 ## discover [wiki-id]
-Delegate to the `wiki-linker` subagent (one per linked wiki, in parallel if several;
-if subagents aren't available, follow `.agents/agents/wiki-linker.md` yourself).
-It compares indexes and overviews to find shared entities, concepts and topics,
-complementary pages and contradictions. Then, with the human's OK:
-- Add `[[wiki-id:slug]]` references (plus a resolvable `([↗](path))` link on first
-  use) to the Related sections of local pages.
-- Record each in the table in `wiki/_meta/external-links.md`.
-- Record contradictions in `_meta/open-questions.md`.
-- Mention the linked wikis in `overview.md` ("Related wikis").
+For each linked wiki (or the one given) — one `wiki-researcher` subagent per wiki in
+parallel if available, otherwise yourself:
+1. Read both wikis' `wiki/index.md` and `wiki/overview.md`.
+2. Match by title, aliases and summary: same entity, same concept, overlapping topics,
+   a page that answers the other wiki's `_meta/open-questions.md`. Confirm by reading.
+3. Propose a table: local page | `[[wiki-id:slug]]` | relationship (same-as, part-of,
+   related, answers, contradicts) | evidence.
+With the user's OK: add the references to the local pages' `## Related` sections, record
+contradictions in `_meta/open-questions.md`, list related wikis in `overview.md`, and
+write things the other wiki should add under "Suggestions for other wikis" in
+`_meta/open-questions.md` (never edit the other wiki).
 
 ## check
-Run `python3 tools/wiki.py xlinks` — verifies every `[[wiki-id:slug]]` resolves to
-an existing page in a registered, locally available wiki. Fix or flag broken ones.
+`python3 tools/wiki.py xlinks` — fix or flag every reference that doesn't resolve.
 
-## Log
-`## [YYYY-MM-DD] link | <action> <wiki-id>` with bullets on references added.
+## add <path>
+Only for wikis that are **not** sibling folders: append
+`- {id: <id>, path: <relative path>}` to `linked_wikis` in `wiki.config.yaml` (read the
+other wiki's config for its id), then run `discover`.
+
+Finish with `python3 tools/wiki.py log add link "<action> <wiki-id>" -m "…"`.

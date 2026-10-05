@@ -2,14 +2,16 @@
 title: "{{Entity name}}"
 type: entity
 entity_type: person | organization | team | product | system | place | project | other
+summary: "One line for the index: what this page is about."
 tags: []
 aliases: []
 created: {{YYYY-MM-DD}}
 updated: {{YYYY-MM-DD}}
-sources: []
 status: draft
 confidence: medium
 ---
+
+<!-- Fill in what you know; OMIT sections that would be empty. -->
 
 # {{Entity name}}
 

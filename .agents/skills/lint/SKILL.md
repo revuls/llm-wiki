@@ -1,47 +1,29 @@
 ---
 name: lint
-description: Health-check the wiki — broken links, orphans, missing pages, index drift, contradictions, stale claims, missing cross-references and data gaps — then write a lint report and fix safe issues. Use when the user says "lint", "health check", "clean up the wiki" or periodically after several ingests.
-argument-hint: "[--fix] [--quick]"
+description: Health-check the wiki — mechanical checks plus a semantic review for contradictions, stale claims, missing pages and cross-references, duplicates and gaps — then write the lint report and fix safe issues. Use for lint, health check, audit or clean up the wiki.
+argument-hint: "[--fix]"
 ---
 
 # Lint
 
-For large wikis, delegate the semantic review to the
-`wiki-linter` subagent (if available) and act on its report.
+## 1. Mechanical
+`python3 tools/wiki.py lint` — duplicate slugs, missing pages, orphans, frontmatter,
+uncited pages, stale index, unknown wiki ids, stale pages, unprocessed raw files.
 
-## 1. Mechanical checks
-Run `python3 tools/wiki.py lint` and read the output. It reports:
-broken wikilinks (missing pages), orphan pages (no inbound links), pages missing
-from or stale in `index.md`, invalid/missing frontmatter, pages without source
-citations, pages not updated in `stale_after_days`, raw files never ingested,
-and unknown cross-wiki ids.
+## 2. Semantic
+Read `wiki/overview.md`, the topic pages, the hubs (`python3 tools/wiki.py status`) and
+pages touched in recent log entries (`python3 tools/wiki.py log -n 20`). Look for:
+- contradictions between pages, or with newer sources; stale claims not marked as superseded;
+- entities/concepts mentioned on 3+ pages without their own page; duplicates to merge;
+- pages about the same thing that don't link each other; thin pages; overview drift;
+- gaps worth a new source or web search, and good questions to ask next.
+For a large wiki, split the reading across `wiki-researcher` subagents (read-only) by section.
 
-`--quick` stops here.
-
-## 2. Semantic checks
-Read `index.md`, `overview.md` and then sample pages, prioritizing hubs and
-recently updated pages (`grep "^## \[" wiki/log.md | tail -20`):
-- **Contradictions** between pages, or between a page and a newer source.
-- **Stale claims** superseded by newer sources but not marked.
-- **Missing pages**: entities/concepts mentioned in ≥3 pages without their own page.
-- **Missing cross-references**: pages discussing the same thing without linking.
-- **Duplicates**: two pages for the same thing (merge candidates).
-- **Thin pages**: stubs that could be enriched from already-ingested sources.
-- **Overview drift**: `overview.md` no longer reflects the wiki.
-- **Data gaps** worth a web search or a new source; **new questions** worth asking.
-
-## 3. Report
-Overwrite `wiki/_meta/lint-report.md` (frontmatter `type: meta`, bump `updated`):
-summary counts, then sections Errors / Warnings / Suggestions, each item with the
-affected `[[pages]]` and a proposed fix.
-
-## 4. Fix
-- Always safe (do without asking): broken index entries, missing frontmatter fields,
-  adding missing backlinks, adding pages to the index.
-- With `--fix` or after the human's OK: creating missing pages, merging duplicates
-  (leave a redirect stub), rewriting the overview, marking stale claims.
-- Never delete pages or touch `raw/` content.
-
-## 5. Log
-`## [YYYY-MM-DD] lint | <N errors, M warnings>` with bullets on what was fixed and
-what is pending. Update `_meta/open-questions.md` with new questions/sources.
+## 3. Report and fix
+- Overwrite `wiki/_meta/lint-report.md` (keep its frontmatter, bump `updated`): counts,
+  then **Errors / Warnings / Suggestions**, each with affected `[[pages]]` and a proposed fix.
+- Fix without asking: frontmatter gaps, missing `summary`, missing links between related pages.
+- With `--fix` or the user's OK: create missing pages, merge duplicates (leave a stub),
+  rewrite the overview, mark superseded claims. Never delete pages or touch `raw/`.
+- Add new questions and sources to `_meta/open-questions.md`.
+- `python3 tools/wiki.py index` and `python3 tools/wiki.py log add lint "<N errors, M warnings>" -m "…"`.

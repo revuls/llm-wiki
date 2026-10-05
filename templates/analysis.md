@@ -1,14 +1,16 @@
 ---
 title: "{{Question or analysis title}}"
 type: analysis
+summary: "One line for the index: what this page is about."
 tags: []
 created: {{YYYY-MM-DD}}
 updated: {{YYYY-MM-DD}}
-sources: []
 status: stable
 confidence: medium
 question: "{{The original question as asked}}"
 ---
+
+<!-- Fill in what you know; OMIT sections that would be empty. -->
 
 # {{Question or analysis title}}
 

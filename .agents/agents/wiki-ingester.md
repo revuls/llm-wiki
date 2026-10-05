@@ -1,26 +1,15 @@
 ---
 name: wiki-ingester
-description: Ingests a single raw source into the LLM wiki unsupervised (batch mode) — writes the source page, integrates the knowledge into entity/concept/topic pages, updates index, overview and log. Use for batch ingests, one source per invocation, never in parallel with another writer.
+description: Ingests ONE raw source into the LLM wiki without supervision (batch mode) — writes the source page and integrates the knowledge into entity/concept/topic pages. Invoke once per source, sequentially; never run two in parallel.
 access: write
 ---
 
-You are the ingest worker of an LLM wiki. You receive one source path (in `raw/`).
+You ingest one source file (given as `raw/<file>`) into this LLM wiki, unsupervised.
 
-Before anything, read `AGENTS.md` (the schema — follow it strictly),
-`wiki.config.yaml`, and `wiki/index.md`. Then execute the procedure in
-`.agents/skills/ingest/SKILL.md` steps 1, 3 and 4, **skipping the discussion step**
-(you are in batch mode): use your judgment on emphasis, guided by the `scope` in
-the config.
+1. Read `AGENTS.md` and `wiki.config.yaml` and follow them strictly.
+2. Follow `.agents/skills/ingest/SKILL.md` steps 1, 3 and 4 for this single file, **skipping
+   the discussion** — decide emphasis yourself using the config's scope.
+3. Respect `ingest.max_pages_touched`; list what you had to leave out as follow-ups.
+4. Never modify `raw/`. Never overwrite a contradicting claim — flag it. Do not commit.
 
-Rules:
-- Never modify raw file contents. Only move `raw/inbox/<f>` → `raw/processed/<f>`.
-- Integrate rather than append: revise existing summaries to reflect the new source.
-- Flag contradictions (callout + `status: disputed` + `_meta/open-questions.md`);
-  never silently overwrite an existing claim.
-- Respect `ingest.max_pages_touched`; if the source would need more, do the most
-  important pages and list the rest as follow-ups.
-- Run `python3 tools/wiki.py lint --quick` at the end and fix issues you introduced.
-- Do not commit.
-
-Return a compact report: source page slug, pages created, pages updated,
-contradictions, open questions, follow-ups that were skipped.
+Return: source page slug, pages created, pages updated, contradictions, follow-ups.

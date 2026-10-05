@@ -1,0 +1,15 @@
+#!/bin/sh
+# Keeps generated files in sync on every commit:
+#   - wiki/index.md (+ split index pages) from page frontmatter
+#   - tool-specific agent files (.claude/, .github/agents/, .codex/agents/) from .agents/
+# Enabled automatically by `wiki.py new|init|upgrade`; manually: git config core.hooksPath .githooks
+PY=$(command -v python3 || command -v python)
+[ -z "$PY" ] && { echo "pre-commit: python not found, skipping wiki sync"; exit 0; }
+ROOT=$(git rev-parse --show-toplevel)
+"$PY" "$ROOT/tools/wiki.py" --root "$ROOT" sync --quiet || exit 1
+"$PY" "$ROOT/tools/wiki.py" --root "$ROOT" index --quiet || exit 1
+cd "$ROOT" || exit 1
+for spec in wiki/index.md ':(glob)wiki/_meta/index-*.md' .claude/agents .claude/skills .github/agents .codex/agents; do
+  git add -A -- "$spec" 2>/dev/null || true
+done
+exit 0

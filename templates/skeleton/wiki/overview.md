@@ -2,14 +2,14 @@
 title: Overview
 type: overview
 summary: Front page — what this wiki covers, the big picture and the main open questions.
-created: 2026-10-05
-updated: 2026-10-05
+created: {{DATE}}
+updated: {{DATE}}
 ---
 
 # Overview
 
 ## What this wiki covers
-My Wiki: _not described yet — run setup-wiki._
+{{NAME}}: _not described yet — run setup-wiki._
 
 ## Big picture
 _No sources ingested yet._

@@ -2,8 +2,8 @@
 title: Lint report
 type: meta
 summary: Latest health-check results (overwritten by each lint).
-created: 2026-10-05
-updated: 2026-10-05
+created: {{DATE}}
+updated: {{DATE}}
 ---
 
 # Lint report
