@@ -16,6 +16,8 @@ together.
 
 ## Works with GitHub Copilot, Codex and Claude Code
 
+**Step-by-step guides:** [GitHub Copilot](docs/guide-copilot.md) · [Codex](docs/guide-codex.md) · [Claude Code](docs/guide-claude-code.md)
+
 The schema and procedures are **tool-neutral** and written once; each agent picks them
 up from the place it natively reads:
 
@@ -69,6 +71,7 @@ templates/           Page templates (source, entity, concept, topic, analysis)
 tools/wiki.py        Helper CLI: search, lint, stats, pending, xlinks, log (stdlib only)
 tools/sync_agents.py Regenerates tool-specific agent files from .agents/
 scripts/new-wiki.py  Bootstrap a new wiki from this template (cross-platform)
+docs/                Usage guides for Copilot, Codex and Claude Code
 ```
 
 ## Quick start
